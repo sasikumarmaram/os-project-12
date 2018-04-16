@@ -1,0 +1,297 @@
+#include <iostream>
+#include <conio.h>
+#include <dos.h>
+#include <Windows.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <ctime>
+using namespace std;
+int counter = 0;
+int count11 = 0;
+int count1 = 0;
+int length,quantum; 
+struct node *head;
+struct node
+{
+	int Data[6];
+	node *link;
+};
+
+void insert (int x[])
+{								
+	node *temp = new node();   
+	temp->Data[0] = x[0];      
+	temp->Data[1] = x[1];	  
+	temp->link = head;        
+	head = temp;	
+}
+void chknewq() 
+{
+	node *temp = new node();
+	temp = head;
+	while (temp != NULL)
+	{
+		if (temp->Data[5] != 0)
+		{
+			count11 = count11 + 1;
+		}
+		temp = temp->link;
+	}
+}
+void bubblesort()         
+{
+	node *temp1, *temp2, *temp3, *temp4, *temp5;
+	temp4 = NULL;
+	while (temp4 != head->link)
+	{
+		temp3 = temp1 = head;
+		temp2 = temp1->link;
+
+		while (temp1 != temp4)
+		{
+			if (temp1->Data[0] > temp2->Data[0])
+			{
+				if (temp1 == head)
+				{
+					temp5 = temp2->link;
+					temp2->link = temp1;
+					temp1->link = temp5;
+					head = temp2;
+					temp3 = temp2;
+				}
+				else
+				{
+					temp5 = temp2->link;
+					temp2->link = temp1;
+					temp1->link = temp5;
+					temp3->link = temp2;
+					temp3 = temp2;
+				}
+			}
+			else
+			{
+				temp3 = temp1;
+				temp1 = temp1->link;
+			}
+
+			temp2 = temp1->link;
+			if (temp2 == temp4)
+			{
+				temp4 = temp1;
+			}
+		}
+	}
+}
+void waitprocess()   
+{
+	node *temp = new node(); 
+	cout << "Waiting time calculation for queue 0" << endl;
+	temp = head;
+	counter = temp->Data[0];
+	while (temp!= NULL)  
+	{
+		if (counter >= temp->Data[0])
+		{
+			temp->Data[2] = counter - temp->Data[0];
+			if (temp->Data[1] >= quantum)   
+			{
+				temp->Data[3] = counter + quantum;
+				counter = temp->Data[3];
+				temp->Data[4] = temp->Data[3] - temp->Data[0];
+				temp->Data[5] = temp->Data[1] - quantum;
+			}
+			else
+			{
+				temp->Data[3] = counter + temp->Data[1];
+				temp->Data[4] = temp->Data[3] - temp->Data[0];
+				counter = temp->Data[3];
+				temp->Data[5] = 0;
+			}
+		}
+		else
+		{
+			counter = temp->Data[0];
+			temp->Data[2] = counter - temp->Data[0];
+			if (temp->Data[1] >= quantum)  
+			{
+				temp->Data[3] = counter + quantum;
+				counter = temp->Data[3];
+				temp->Data[4] = temp->Data[3] - temp->Data[0];
+				temp->Data[5] = temp->Data[1] - quantum;
+			}
+			else
+			{
+				temp->Data[3] = counter + temp->Data[1];
+				counter = temp->Data[3];
+				temp->Data[4] = temp->Data[3] - temp->Data[0];
+				temp->Data[5] = 0;
+			}
+		}
+		temp = temp->link;
+	}
+}
+// for Wait Process 2
+void waitprocess2()
+{
+	node *temp = new node();
+	cout << "Waiting Time Calculation for Queue 2" << endl;
+	temp = head;
+	while (temp != NULL)
+	{
+		if (temp->Data[5] != 0)
+		{
+			temp->Data[0] = temp->Data[3]; 
+			temp->Data[1] = temp->Data[5]; 
+			if (counter >= temp->Data[0])
+			{
+				temp->Data[2] = counter - temp->Data[0];
+				if (temp->Data[1] >= quantum) 
+				{
+					temp->Data[3] = counter + quantum;
+					counter = temp->Data[3];
+					temp->Data[4] = temp->Data[3] - temp->Data[0];
+					temp->Data[5] = temp->Data[1] - quantum;
+				}
+				else
+				{
+					temp->Data[3] = counter + temp->Data[1];
+					temp->Data[4] = temp->Data[3] - temp->Data[0];
+					counter = temp->Data[3];
+					temp->Data[5] = 0;
+				}
+			}
+			else
+			{
+				counter = temp->Data[0];
+				temp->Data[2] = counter - temp->Data[0];
+				if (temp->Data[1] >= quantum)   
+				{
+					temp->Data[3] = counter + quantum;
+					counter = temp->Data[3];
+					temp->Data[4] = temp->Data[3] - temp->Data[0];
+					temp->Data[5] = temp->Data[1] - quantum;
+				}
+				else
+				{
+					temp->Data[3] = counter + temp->Data[1];
+					counter = temp->Data[3];
+					temp->Data[4] = temp->Data[3] - temp->Data[0];
+					temp->Data[5] = 0;
+				}
+			}
+		}
+		temp = temp->link;
+	}
+}
+//for Wait Process3//
+void waitprocess3()
+{
+	node *temp = new node();
+	cout << "Waiting Time Calculation for Queue 2" << endl;
+	temp = head;
+	while (temp != NULL)
+	{
+		if (temp->Data[5] != 0)
+		{
+			temp->Data[0] = temp->Data[3]; 
+			temp->Data[1] = temp->Data[5]; 
+			if (counter >= temp->Data[0])
+			{
+				temp->Data[2] = counter - temp->Data[0];
+				temp->Data[3] = counter + temp->Data[1];
+				counter = temp->Data[3];
+				temp->Data[4] = temp->Data[3] - temp->Data[0];
+				temp->Data[5] = 0;
+			}
+			else
+			{
+				counter = temp->Data[0];
+				temp->Data[2] = counter - temp->Data[0];
+				temp->Data[3] = counter + temp->Data[1];
+				counter = temp->Data[3];
+				temp->Data[4] = temp->Data[3] - temp->Data[0];
+				temp->Data[5] = 0;
+			}
+		}
+		temp = temp->link;
+	}
+}
+void printing()   
+{
+	node *temp1 = head;
+	while (temp1 != NULL) 
+	{	
+		cout << "Arrival Time is:" << temp1->Data[0] << endl;
+		cout << "Burst Time is:" << temp1->Data[1] << endl;
+		cout << "Waiting Time is:" << temp1->Data[2] <<endl;
+		cout << "Turn Around Time is:" << temp1->Data[4] << endl;
+		cout << "Completion Time: " << temp1->Data[3] << endl;
+		cout << "Remaining Burst time" << temp1->Data[5] << endl;
+		cout << "-------------------------" << endl;
+		temp1 = temp1->link;
+	}
+}
+void printing1()   
+{
+	node *temp2 = new node();
+	temp2 = head;
+	while (temp2!= NULL) 
+	{
+		if (temp2->Data[5] != 0)
+		{
+			cout << "Arrival Time is:" << temp2->Data[0] << endl;
+			cout << "Burst Time is:" << temp2->Data[1] << endl;
+			cout << "Waiting Time is:" << temp2->Data[2] << endl;
+			cout << "Turn Around Time is:" << temp2->Data[4] << endl;
+			cout << "Completion Time: " << temp2->Data[3] << endl;
+			cout << "Remaining Burst time" << temp2->Data[5] << endl;
+			cout << "-------------------------" << endl;
+		}
+		temp2 = temp2->link;
+	}
+}
+int main()
+{
+	node *first = new node();
+	head = NULL;
+	quantum = 8;
+	int at,bt,data[2];
+	cout << "How many process need to be created" << endl;
+	cin >> length;
+	srand(time(NULL));
+	for (int i = 0; i < length; i++)
+	{
+		Sleep(10);
+		at = rand() % 10;
+		bt = rand() % 10 + 15;
+		data[0] = at;
+		data[1] = bt;
+		insert(data);
+	}
+	bubblesort();
+	waitprocess();
+	printing();
+	chknewq();
+	if (count11 = 1)
+	{
+		cout <<count11<< " Process moved to Q1"<< endl;
+		cout << "Executed Time for Q1 is: " << counter << endl;
+	}
+	else
+	{
+		cout << "All process got executed in Q0" << endl;
+	}
+	if (count11 >= 1)
+	{
+		waitprocess2();
+		printing();
+		cout << count11 << " Process moved to Q2" << endl;
+		cout << "Executed Time for Q2 is: " << counter << endl;
+	}
+	else
+	{
+		cout << "All process got executed in Q1" << endl;
+	}
+	waitprocess3();
+	printing();
+}
